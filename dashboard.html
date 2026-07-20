@@ -183,11 +183,9 @@ function runScripts(container) {
   const scripts = container.querySelectorAll('script');
   scripts.forEach(function (old) {
     const s = document.createElement('script');
-    if (old.type) s.type = old.type;
-    if (old.type === 'application/json') {
-      s.textContent = old.textContent;
-      old.parentNode.replaceChild(s, old);
-      return;
+    for (let i = 0; i < old.attributes.length; i++) {
+      const attr = old.attributes[i];
+      s.setAttribute(attr.name, attr.value);
     }
     s.textContent = old.textContent;
     old.parentNode.replaceChild(s, old);
